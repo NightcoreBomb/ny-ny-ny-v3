@@ -4,11 +4,11 @@
 
 студент 2-го курсу, групи ІО-32 Цветков Влад [Telegram](https://t.me/brokefever)
 
-студент 2-го курсу, групи ІО-32 Цветков Влад [Telegram](https://t.me/kezald)
+студент 2-го курсу, групи ІО-32 Лопушенко Кирило [Telegram](https://t.me/kezald)
 
-студент 2-го курсу, групи ІО-32 Цветков Влад [Telegram](https://t.me/sultanmedved)
+студент 2-го курсу, групи ІО-32 Бакаєв Деніс [Telegram](https://t.me/sultanmedved)
 
-студент 2-го курсу, групи ІО-32 Цветков Влад [Telegram](https://t.me/hateniggers1488)
+студент 2-го курсу, групи ІО-32 Шведенко Іван [Telegram](https://t.me/hateniggers1488)
 
 # Керівник
 
