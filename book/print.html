@@ -1,0 +1,400 @@
+<!DOCTYPE HTML>
+<html lang="uk" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Назва проєкту</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Назва проєкту</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="Виконали"><a class="header" href="#Виконали">Виконали</a></h2>
+<p>студент 2-го курсу, групи ІО-32 Кекух Андрій <a href="https://t.me/SPapor33">Telegram</a></p>
+<p>студент 2-го курсу, групи ІО-32 Цветков Влад <a href="https://t.me/brokefever">Telegram</a></p>
+<p>студент 2-го курсу, групи ІО-32 Лопушенко Кирило <a href="https://t.me/kezald">Telegram</a></p>
+<p>студент 2-го курсу, групи ІО-32 Бакаєв Деніс <a href="https://t.me/sultanmedved">Telegram</a></p>
+<p>студент 2-го курсу, групи ІО-32 Шведенко Іван <a href="https://t.me/hateniggers1488">Telegram</a></p>
+<h1 id="Керівник"><a class="header" href="#Керівник">Керівник</a></h1>
+<p><em>доцент кафедри ОТ ФІОТ, к.т.н., доцент</em> <strong>Андрій БОЛДАК</strong></p>
+<p><a href="https://kpi.ua/">НТУУ "КИЇВСЬКИЙ ПОЛІТЕХНІЧНИЙ ІНСТИТУТ імені ІГОРЯ СІКОРСЬКОГО</a></p>
+<p><a href="https://fiot.kpi.ua/">Факультет інформатики та обчислювальної техніки</a></p>
+<p><a href="https://comsys.kpi.ua/">Кафедра обчислювальної техніки</a></p>
+<p>Київ</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Вступ"><a class="header" href="#Вступ">Вступ</a></h1>
+<p>У вступі описується мета роботи і розглядається поставлене завдання з позиції її
+актуальності, значення її розв’язання для тієї предметної області, до якої відноситься
+тема бакалаврського проєкту.</p>
+<p>Коротко характеризується сучасний рівень розв’язання
+даного завдання і взаємозв’язок з іншими проєктами по цій тематиці.</p>
+<p>Наводяться
+основні технічні характеристики розробки й очікуваний технічно-економічний ефект
+від її реалізації.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Розроблення-загальних-вимог-до-системи"><a class="header" href="#Розроблення-загальних-вимог-до-системи">Розроблення загальних вимог до системи</a></h1>
+<ul>
+<li><a href="./state-of-the-art.html">Аналіз предметної області</a></li>
+<li><a href="./stakeholders-needs.html">Запити зацікавлених осіб</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Аналіз-предметної-області"><a class="header" href="#Аналіз-предметної-області">Аналіз предметної області</a></h1>
+<h2 id="Вступ-1"><a class="header" href="#Вступ-1">Вступ</a></h2>
+<p><em>[Вступ повинен містити короткий огляд всього документу.]</em></p>
+<h2 id="Основні-визначення"><a class="header" href="#Основні-визначення">Основні визначення</a></h2>
+<p><em>[Розділ містить визначення термінів та скорочень, які використовуються при аналізі предметної області.]</em></p>
+<h2 id="Підходи-та-способи-вирішення-завдання"><a class="header" href="#Підходи-та-способи-вирішення-завдання">Підходи та способи вирішення завдання</a></h2>
+<p><em>[Розділ містить опис підходів, моделей та способів вирішення завдання.]</em></p>
+<h2 id="Порівняльна-характеристика-існуючих-засобів-вирішення-завдання"><a class="header" href="#Порівняльна-характеристика-існуючих-засобів-вирішення-завдання">Порівняльна характеристика існуючих засобів вирішення завдання</a></h2>
+<p><em>[Розділ містить опис існуючих програм, інформаційних систем, сервісів, тощо, призначених для вирішення
+завдання. Дається порівняльна характеристика властивостей FURPS:</em></p>
+<ul>
+<li><em>Functionality (функциональні вимоги)</em></li>
+<li><em>Usability (вимоги до зручності роботи)</em></li>
+<li><em>Reliability (вимоги до надійності)</em></li>
+<li><em>Performance (вимоги до продуктивності)</em></li>
+<li><em>Supportability (вимоги до підтримки)</em></li>
+</ul>
+<p><em>(у вигляді таблиці).]</em></p>
+<h2 id="Висновки"><a class="header" href="#Висновки">Висновки</a></h2>
+<p><em>[Робляться висновки щодо доцільності розробки нової або модифікації існуючої інформаційної системи, необхідності та способів інтеграції з системами(сервісами) третіх сторін, тощо.]</em></p>
+<h2 id="Посилання"><a class="header" href="#Посилання">Посилання</a></h2>
+<p><em>[Розділ містить повний список всіх документів, про які згадується.]</em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Запити-зацікавлених-осіб"><a class="header" href="#Запити-зацікавлених-осіб">Запити зацікавлених осіб</a></h1>
+<h2 id="Вступ-2"><a class="header" href="#Вступ-2">Вступ</a></h2>
+<p><em>[Вступ повинен містити короткий огляд всього документу.]</em></p>
+<h3 id="Мета"><a class="header" href="#Мета">Мета</a></h3>
+<p><em>[Визначення мети цієї сукупності вимог. Зазвичай такою метою є створення та впровадження
+інформаційної системи відповідного призначення.]</em></p>
+<h3 id="Контекст"><a class="header" href="#Контекст">Контекст</a></h3>
+<p><em>[Короткий опис того, з якими проектами пов'язаний цей документ, на що він впливає.]</em></p>
+<h3 id="Основні-визначення-та-скорочення"><a class="header" href="#Основні-визначення-та-скорочення">Основні визначення та скорочення</a></h3>
+<p><em>[Розділ містить визначення всіх термінів та скорочень, необхідних для правильного
+тлумачення вимог. Можна зробити посилання на документ, в якому поданий аналіз предметної області.]</em></p>
+<h3 id="Посилання-1"><a class="header" href="#Посилання-1">Посилання</a></h3>
+<p><em>[Розділ містить повний список всіх документів, про які згадується.]</em></p>
+<h2 id="Короткий-зміст"><a class="header" href="#Короткий-зміст">Короткий зміст</a></h2>
+<p><em>[Розділ містить опис того, про що йдеться в еій частині цього документу, що залишилася.
+Також тут описана структура документу.]</em></p>
+<h2 id="Характеристика-ділових-процесів"><a class="header" href="#Характеристика-ділових-процесів">Характеристика ділових процесів</a></h2>
+<p><em>[В цьому розділі визначаються зовнішні фактори, що впливають на бізнес (бізнес-актори),
+та внутрішні фактори (робітники), дається загальна характеристика діяльності бізнес-акторів
+та робітників, яка здійснюється за допомогою бізнесу.</em></p>
+<p><em>Дається опис бізнес-сценаріїв взаємодії бізнес-акторів, робітників і, можливо, інформаційної системи за допомогою наступної
+специфікації:</em></p>
+<p><em><strong>ID:</strong></em></p>
+<p><em><strong>НАЗВА:</strong></em></p>
+<p><em><strong>УЧАСНИКИ:</strong></em></p>
+<p><em><strong>ПЕРЕДУМОВИ:</strong></em></p>
+<p><em><strong>РЕЗУЛЬТАТ:</strong></em></p>
+<p><em><strong>ВИКЛЮЧНІ СИТУАЦІЇ:</strong></em></p>
+<p><em><strong>ОСНОВНИЙ СЦЕНАРІЙ:</strong></em></p>
+<p><em>Кількість сценаріїв визначається у відповідності до специфіки завдання та необхідного
+рівня деталізації (зазвичай, 5-6 сценаріїв).</em></p>
+<h2 id="Короткий-огляд-продукту"><a class="header" href="#Короткий-огляд-продукту">Короткий огляд продукту</a></h2>
+<p><em>[Визначається границя системи та категорії її користувачів. Дається загальна характеристика категорій користувачів
+системи]</em></p>
+<p><em>[Нижче йде опис FURPS:]</em></p>
+<h2 id="Функціональність"><a class="header" href="#Функціональність">Функціональність</a></h2>
+<p><em>[Functionality (функциональні вимоги)]</em></p>
+<h2 id="Практичність"><a class="header" href="#Практичність">Практичність</a></h2>
+<p><em>[Usability (вимоги до зручності роботи)]</em></p>
+<h2 id="Надійність"><a class="header" href="#Надійність">Надійність</a></h2>
+<p><em>[Reliability (вимоги до надійності)]</em></p>
+<h2 id="Продуктивність"><a class="header" href="#Продуктивність">Продуктивність</a></h2>
+<p><em>[Performance (вимоги до продуктивності)]</em></p>
+<h2 id="Експлуатаційна-придатність"><a class="header" href="#Експлуатаційна-придатність">Експлуатаційна придатність</a></h2>
+<p><em>[Supportability (вимоги до підтримки)]</em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Розроблення-функціональних-вимог-до-системи"><a class="header" href="#Розроблення-функціональних-вимог-до-системи">Розроблення функціональних вимог до системи</a></h1>
+<h2 id="Модель-прецедентів"><a class="header" href="#Модель-прецедентів">Модель прецедентів</a></h2>
+<p>В цьому файлі необхідно перелічити всі документи, розроблені в проекті та дати посилання на них.</p>
+<p><em>Модель прецедентів повинна містити загальні оглядові діаграми та специфікації прецедентів.</em></p>
+<p>Вбудовування зображень діаграм здійснюється з використанням сервісу <a href="https://plantuml.com/">plantuml.com</a>.</p>
+<p>В markdown-файлі використовується опис діаграми</p>
+<pre><code class="language-md">
+&lt;center style="
+    border-radius:4px;
+    border: 1px solid #cfd7e6;
+    box-shadow: 0 1px 3px 0 rgba(89,105,129,.05), 0 1px 1px 0 rgba(0,0,0,.025);
+    padding: 1em;"
+&gt;
+
+@startuml
+
+    right header
+        &lt;font size=24 color=black&gt;Package: &lt;b&gt;UCD_3.0
+    end header
+
+    title
+        &lt;font size=18 color=black&gt;UC_8. Редагувати конфігурацію порталу
+        &lt;font size=16 color=black&gt;Діаграма прецедентів
+    end title
+
+
+    actor "Користувач" as User #eeeeaa
+    
+    package UCD_1{
+        usecase "&lt;b&gt;UC_1&lt;/b&gt;\nПереглянути список \nзвітів" as UC_1 #aaeeaa
+    }
+    
+    usecase "&lt;b&gt;UC_1.1&lt;/b&gt;\nЗастосувати фільтр" as UC_1.1
+    usecase "&lt;b&gt;UC_1.2&lt;/b&gt;\nПереглянути метадані \nзвіту" as UC_1.2  
+    usecase "&lt;b&gt;UC_1.2.1&lt;/b&gt;\nДати оцінку звіту" as UC_1.2.1  
+    usecase "&lt;b&gt;UC_1.2.2&lt;/b&gt;\nПереглянути інформацію \nпро авторів звіту" as UC_1.2.2
+    
+    package UCD_1 {
+        usecase "&lt;b&gt;UC_4&lt;/b&gt;\nВикликати звіт" as UC_4 #aaeeaa
+    }
+    
+    usecase "&lt;b&gt;UC_1.1.1&lt;/b&gt;\n Використати \nпошукові теги" as UC_1.1.1  
+    usecase "&lt;b&gt;UC_1.1.2&lt;/b&gt;\n Використати \nрядок пошуку" as UC_1.1.2
+    usecase "&lt;b&gt;UC_1.1.3&lt;/b&gt;\n Використати \nавторів" as UC_1.1.3  
+    
+    
+    
+    User -&gt; UC_1
+    UC_1.1 .u.&gt; UC_1 :extends
+    UC_1.2 .u.&gt; UC_1 :extends
+    UC_4 .d.&gt; UC_1.2 :extends
+    UC_1.2 .&gt; UC_1.2 :extends
+    UC_1.2.1 .u.&gt; UC_1.2 :extends
+    UC_1.2.2 .u.&gt; UC_1.2 :extends
+    UC_1 ..&gt; UC_1.2.2 :extends
+    
+    
+    UC_1.1.1 -u-|&gt; UC_1.1
+    UC_1.1.2 -u-|&gt; UC_1.1
+    UC_1.1.3 -u-|&gt; UC_1.1
+    
+    right footer
+        Аналітичний портал. Модель прецедентів.
+        НТУУ КПІ ім.І.Сікорського
+        Киів-2020
+    end footer
+
+@enduml
+
+**Діаграма прецедентів**
+
+&lt;/center&gt;
+</code></pre>
+<p>яка буде відображена наступним чином</p>
+<center style="
+    border-radius:4px;
+    border: 1px solid #cfd7e6;
+    box-shadow: 0 1px 3px 0 rgba(89,105,129,.05), 0 1px 1px 0 rgba(0,0,0,.025);
+    padding: 1em;"
+    >
+<p><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgZGF0YS1kaWFncmFtLXR5cGU9IkRFU0NSSVBUSU9OIiBoZWlnaHQ9IjU1OXB4IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBzdHlsZT0id2lkdGg6MTE2NHB4O2hlaWdodDo1NTlweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMTY0IDU1OSIgd2lkdGg9IjExNjRweCIgem9vbUFuZFBhbj0ibWFnbmlmeSI+PHRpdGxlPiZsdDtmb250IHNpemU9MTggY29sb3I9YmxhY2smZ3Q7VUNfOC4gJiMxMDU2OyYjMTA3NzsmIzEwNzY7JiMxMDcyOyYjMTA3NTsmIzEwOTE7JiMxMDc0OyYjMTA3MjsmIzEwOTA7JiMxMDgwOyAmIzEwODI7JiMxMDg2OyYjMTA4NTsmIzEwOTI7JiMxMTEwOyYjMTA3NTsmIzEwOTE7JiMxMDg4OyYjMTA3MjsmIzEwOTQ7JiMxMTEwOyYjMTEwMjsgJiMxMDg3OyYjMTA4NjsmIzEwODg7JiMxMDkwOyYjMTA3MjsmIzEwODM7JiMxMDkxOzwvdGl0bGU+PGRlZnMvPjxnPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEwOS4wNjY0IiB4PSI5MjIuMTEyOSIgeT0iMjIuMjc3MyI+UGFja2FnZTo8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjExMS41MzkxIiB4PSIxMDM4LjgwODIiIHk9IjIyLjI3NzMiPlVDRF8zLjA8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjQyNC4yMDQxIiB4PSIzNjMuMDcxNiIgeT0iNTUuNjQ1NSI+VUNfOC4gJiMxMDU2OyYjMTA3NzsmIzEwNzY7JiMxMDcyOyYjMTA3NTsmIzEwOTE7JiMxMDc0OyYjMTA3MjsmIzEwOTA7JiMxMDgwOyAmIzEwODI7JiMxMDg2OyYjMTA4NTsmIzEwOTI7JiMxMTEwOyYjMTA3NTsmIzEwOTE7JiMxMDg4OyYjMTA3MjsmIzEwOTQ7JiMxMTEwOyYjMTEwMjsgJiMxMDg3OyYjMTA4NjsmIzEwODg7JiMxMDkwOyYjMTA3MjsmIzEwODM7JiMxMDkxOzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjA2LjM2NzIiIHg9IjQ3MS45OSIgeT0iNzQuNzQyMiI+JiMxMDQ0OyYjMTExMDsmIzEwNzI7JiMxMDc1OyYjMTA4ODsmIzEwNzI7JiMxMDg0OyYjMTA3MjsgJiMxMDg3OyYjMTA4ODsmIzEwNzc7JiMxMDk0OyYjMTA3NzsmIzEwNzY7JiMxMDc3OyYjMTA4NTsmIzEwOTA7JiMxMTEwOyYjMTA3NDs8L3RleHQ+PCEtLWNsdXN0ZXIgVUNEXzEtLT48ZyBjbGFzcz0iY2x1c3RlciIgZGF0YS1lbnRpdHk9IlVDRF8xIiBkYXRhLXNvdXJjZS1saW5lPSIxMyIgZGF0YS11aWQ9ImVudDAwMDMiIGlkPSJjbHVzdGVyX1VDRF8xIj48cGF0aCBkPSJNMTYyLjYxLDk1LjUxNTYgTDIxMy42MTQ5LDk1LjUxNTYgQTMuNzUsMy43NSAwIDAgMSAyMTYuMTE0OSw5OC4wMTU2IEwyMjMuMTE0OSwxMTcuODEyNSBMNjQ4LjYxLDExNy44MTI1IEEyLjUsMi41IDAgMCAxIDY1MS4xMSwxMjAuMzEyNSBMNjUxLjExLDIxOS4xNjU2IEEyLjUsMi41IDAgMCAxIDY0OC42MSwyMjEuNjY1NiBMMTYyLjYxLDIyMS42NjU2IEEyLjUsMi41IDAgMCAxIDE2MC4xMSwyMTkuMTY1NiBMMTYwLjExLDk4LjAxNTYgQTIuNSwyLjUgMCAwIDEgMTYyLjYxLDk1LjUxNTYgIiBmaWxsPSJub25lIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjEuNTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjEuNTsiIHgxPSIxNjAuMTEiIHgyPSIyMjMuMTE0OSIgeTE9IjExNy44MTI1IiB5Mj0iMTE3LjgxMjUiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTAuMDA0OSIgeD0iMTY0LjExIiB5PSIxMTAuNTEwNyI+VUNEXzE8L3RleHQ+PC9nPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtZW50aXR5PSJVQ18xIiBkYXRhLXNvdXJjZS1saW5lPSIxNCIgZGF0YS11aWQ9ImVudDAwMDQiIGlkPSJlbnRpdHlfVUNfMSI+PGVsbGlwc2UgY3g9IjUxMy4xMTAyIiBjeT0iMTY4LjA5NjUiIGZpbGw9IiNBQUVFQUEiIHJ4PSIxMjEuNTMwMiIgcnk9IjM3LjU3MDkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzOC4zODM4IiB4PSI0OTMuOTE4MyIgeT0iMTU0LjY0NjMiPlVDXzE8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTUxLjE3NjgiIHg9IjQzNS4yOTY3IiB5PSIxNzAuOTQzMiI+JiMxMDU1OyYjMTA3NzsmIzEwODg7JiMxMDc3OyYjMTA3NTsmIzEwODM7JiMxMTAzOyYjMTA4NTsmIzEwOTE7JiMxMDkwOyYjMTA4MDsgJiMxMDg5OyYjMTA4NzsmIzEwODA7JiMxMDg5OyYjMTA4NjsmIzEwODI7PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjM5Ljg4MDkiIHg9IjQ5My4xNjk3IiB5PSIxODcuMjQwMSI+JiMxMDc5OyYjMTA3NDsmIzExMTA7JiMxMDkwOyYjMTExMDsmIzEwNzQ7PC90ZXh0PjwvZz48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLWVudGl0eT0iVUNfNCIgZGF0YS1zb3VyY2UtbGluZT0iMjMiIGRhdGEtdWlkPSJlbnQwMDA5IiBpZD0iZW50aXR5X1VDXzQiPjxlbGxpcHNlIGN4PSIyNjYuMTA4OSIgY3k9IjE2OC4wOTI5IiBmaWxsPSIjQUFFRUFBIiByeD0iOTAuNDU4OSIgcnk9IjI2LjA0NzMiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzOC4zODM4IiB4PSIyNDYuOTE3IiB5PSIxNjIuNzkxMSI+VUNfNDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMTEuNjg1NSIgeD0iMjEwLjI2NjEiIHk9IjE3OS4wODgiPiYjMTA0MjsmIzEwODA7JiMxMDgyOyYjMTA4MzsmIzEwODA7JiMxMDgyOyYjMTA3MjsmIzEwOTA7JiMxMDgwOyAmIzEwNzk7JiMxMDc0OyYjMTExMDsmIzEwOTA7PC90ZXh0PjwvZz48IS0tZW50aXR5IFVzZXItLT48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLWVudGl0eT0iVXNlciIgZGF0YS1zb3VyY2UtbGluZT0iMTEiIGRhdGEtdWlkPSJlbnQwMDAyIiBpZD0iZW50aXR5X1VzZXIiPjxlbGxpcHNlIGN4PSI3MTIuMTA0NyIgY3k9IjEzOC40NDU2IiBmaWxsPSIjRUVFRUFBIiByeD0iOCIgcnk9IjgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjxwYXRoIGQ9Ik03MTIuMTA0NywxNDYuNDQ1NiBMNzEyLjEwNDcsMTczLjQ0NTYgTTY5OS4xMDQ3LDE1NC40NDU2IEw3MjUuMTA0NywxNTQuNDQ1NiBNNzEyLjEwNDcsMTczLjQ0NTYgTDY5OS4xMDQ3LDE4OC40NDU2IE03MTIuMTA0NywxNzMuNDQ1NiBMNzI1LjEwNDcsMTg4LjQ0NTYgIiBmaWxsPSJub25lIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI4NS43Mjk1IiB4PSI2NjkuMjQiIHk9IjIwMi45NDA3Ij4mIzEwNTA7JiMxMDg2OyYjMTA4ODsmIzEwODA7JiMxMDg5OyYjMTA5MDsmIzEwOTE7JiMxMDc0OyYjMTA3MjsmIzEwOTU7PC90ZXh0PjwvZz48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLWVudGl0eT0iVUNfMS4xIiBkYXRhLXNvdXJjZS1saW5lPSIxNyIgZGF0YS11aWQ9ImVudDAwMDUiIGlkPSJlbnRpdHlfVUNfMS4xIj48ZWxsaXBzZSBjeD0iODAyLjExIiBjeT0iMzIyLjIzMjkiIGZpbGw9IiNGMUYxRjEiIHJ4PSIxMTUuMTQiIHJ5PSIyNi4wNDczIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTMuNDQzNCIgeD0iNzc1LjM4ODMiIHk9IjMxNi45MzExIj5VQ18xLjE8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTQ2LjU4OTgiIHg9IjcyOC44MTUiIHk9IjMzMy4yMjgiPiYjMTA0NzsmIzEwNzI7JiMxMDg5OyYjMTA5MDsmIzEwODY7JiMxMDg5OyYjMTA5MTsmIzEwNzQ7JiMxMDcyOyYjMTA5MDsmIzEwODA7ICYjMTA5MjsmIzExMTA7JiMxMDgzOyYjMTEwMDsmIzEwOTA7JiMxMDg4OzwvdGV4dD48L2c+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1lbnRpdHk9IlVDXzEuMiIgZGF0YS1zb3VyY2UtbGluZT0iMTgiIGRhdGEtdWlkPSJlbnQwMDA2IiBpZD0iZW50aXR5X1VDXzEuMiI+PGVsbGlwc2UgY3g9IjI0Ny4xMDc4IiBjeT0iMzIyLjIzNjUiIGZpbGw9IiNGMUYxRjEiIHJ4PSIxMzMuMjI3OCIgcnk9IjM3LjU3MDkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1My40NDM0IiB4PSIyMjAuMzg2MSIgeT0iMzA4Ljc4NjMiPlVDXzEuMjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNjcuNzE5NyIgeD0iMTYxLjAyMjgiIHk9IjMyNS4wODMyIj4mIzEwNTU7JiMxMDc3OyYjMTA4ODsmIzEwNzc7JiMxMDc1OyYjMTA4MzsmIzExMDM7JiMxMDg1OyYjMTA5MTsmIzEwOTA7JiMxMDgwOyAmIzEwODQ7JiMxMDc3OyYjMTA5MDsmIzEwNzI7JiMxMDc2OyYjMTA3MjsmIzEwODU7JiMxMTEwOzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzNi4wMjU0IiB4PSIyMjkuMDk1MSIgeT0iMzQxLjM4MDEiPiYjMTA3OTsmIzEwNzQ7JiMxMTEwOyYjMTA5MDsmIzEwOTE7PC90ZXh0PjwvZz48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLWVudGl0eT0iVUNfMS4yLjEiIGRhdGEtc291cmNlLWxpbmU9IjE5IiBkYXRhLXVpZD0iZW50MDAwNyIgaWQ9ImVudGl0eV9VQ18xLjIuMSI+PGVsbGlwc2UgY3g9IjEwOS4xMDg4IiBjeT0iNDc0LjM3MjkiIGZpbGw9IiNGMUYxRjEiIHJ4PSIxMDMuMTA4OCIgcnk9IjI2LjA0NzMiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI2OC41MDI5IiB4PSI3NC44NTczIiB5PSI0NjkuMDcxMSI+VUNfMS4yLjE8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTI5LjU3NTIiIHg9IjQ0LjMyMTIiIHk9IjQ4NS4zNjgiPiYjMTA0NDsmIzEwNzI7JiMxMDkwOyYjMTA4MDsgJiMxMDg2OyYjMTA5NDsmIzExMTA7JiMxMDg1OyYjMTA4MjsmIzEwOTE7ICYjMTA3OTsmIzEwNzQ7JiMxMTEwOyYjMTA5MDsmIzEwOTE7PC90ZXh0PjwvZz48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLWVudGl0eT0iVUNfMS4yLjIiIGRhdGEtc291cmNlLWxpbmU9IjIwIiBkYXRhLXVpZD0iZW50MDAwOCIgaWQ9ImVudGl0eV9VQ18xLjIuMiI+PGVsbGlwc2UgY3g9IjM5NC4xMDYxIiBjeT0iNDc0LjM3NjUiIGZpbGw9IiNGMUYxRjEiIHJ4PSIxNDcuMDg2MSIgcnk9IjM3LjU3MDkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI2OC41MDI5IiB4PSIzNTkuODU0NyIgeT0iNDYwLjkyNjMiPlVDXzEuMi4yPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE4Ny4zMTg0IiB4PSIyOTguMjIxOCIgeT0iNDc3LjIyMzIiPiYjMTA1NTsmIzEwNzc7JiMxMDg4OyYjMTA3NzsmIzEwNzU7JiMxMDgzOyYjMTEwMzsmIzEwODU7JiMxMDkxOyYjMTA5MDsmIzEwODA7ICYjMTExMDsmIzEwODU7JiMxMDkyOyYjMTA4NjsmIzEwODg7JiMxMDg0OyYjMTA3MjsmIzEwOTQ7JiMxMTEwOyYjMTEwMjs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTI2LjEwOTQiIHg9IjMzMS4wNTE0IiB5PSI0OTMuNTIwMSI+JiMxMDg3OyYjMTA4ODsmIzEwODY7ICYjMTA3MjsmIzEwNzQ7JiMxMDkwOyYjMTA4NjsmIzEwODg7JiMxMTEwOyYjMTA3NDsgJiMxMDc5OyYjMTA3NDsmIzExMTA7JiMxMDkwOyYjMTA5MTs8L3RleHQ+PC9nPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtZW50aXR5PSJVQ18xLjEuMSIgZGF0YS1zb3VyY2UtbGluZT0iMjYiIGRhdGEtdWlkPSJlbnQwMDEwIiBpZD0iZW50aXR5X1VDXzEuMS4xIj48ZWxsaXBzZSBjeD0iNjYyLjExMDciIGN5PSI0NzQuMzc2NSIgZmlsbD0iI0YxRjFGMSIgcng9Ijg2LjE5MDciIHJ5PSIzNy41NzA5IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNjguNTAyOSIgeD0iNjI3Ljg1OTIiIHk9IjQ2MC45MjYzIj5VQ18xLjEuMTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI5NS4zOTU1IiB4PSI2MTQuNDEyOSIgeT0iNDc3LjIyMzIiPiYjMTA0MjsmIzEwODA7JiMxMDgyOyYjMTA4NjsmIzEwODg7JiMxMDgwOyYjMTA4OTsmIzEwOTA7JiMxMDcyOyYjMTA5MDsmIzEwODA7PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEwNS42NDk0IiB4PSI2MDkuMjg2IiB5PSI0OTMuNTIwMSI+JiMxMDg3OyYjMTA4NjsmIzEwOTY7JiMxMDkxOyYjMTA4MjsmIzEwODY7JiMxMDc0OyYjMTExMDsgJiMxMDkwOyYjMTA3NzsmIzEwNzU7JiMxMDgwOzwvdGV4dD48L2c+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1lbnRpdHk9IlVDXzEuMS4yIiBkYXRhLXNvdXJjZS1saW5lPSIyNyIgZGF0YS11aWQ9ImVudDAwMTEiIGlkPSJlbnRpdHlfVUNfMS4xLjIiPjxlbGxpcHNlIGN4PSI4NjguMTEzNiIgY3k9IjQ3NC4zNzY1IiBmaWxsPSIjRjFGMUYxIiByeD0iODUuMjMzNiIgcnk9IjM3LjU3MDkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI2OC41MDI5IiB4PSI4MzMuODYyMiIgeT0iNDYwLjkyNjMiPlVDXzEuMS4yPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9Ijk1LjM5NTUiIHg9IjgyMC40MTU5IiB5PSI0NzcuMjIzMiI+JiMxMDQyOyYjMTA4MDsmIzEwODI7JiMxMDg2OyYjMTA4ODsmIzEwODA7JiMxMDg5OyYjMTA5MDsmIzEwNzI7JiMxMDkwOyYjMTA4MDs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTA0LjAxNTYiIHg9IjgxNi4xMDU4IiB5PSI0OTMuNTIwMSI+JiMxMDg4OyYjMTEwMzsmIzEwNzY7JiMxMDg2OyYjMTA4MjsgJiMxMDg3OyYjMTA4NjsmIzEwOTY7JiMxMDkxOyYjMTA4MjsmIzEwOTE7PC90ZXh0PjwvZz48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLWVudGl0eT0iVUNfMS4xLjMiIGRhdGEtc291cmNlLWxpbmU9IjI4IiBkYXRhLXVpZD0iZW50MDAxMiIgaWQ9ImVudGl0eV9VQ18xLjEuMyI+PGVsbGlwc2UgY3g9IjEwNzMuMTEzNiIgY3k9IjQ3NC4zNzY1IiBmaWxsPSIjRjFGMUYxIiByeD0iODUuMjMzNiIgcnk9IjM3LjU3MDkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI2OC41MDI5IiB4PSIxMDM4Ljg2MjIiIHk9IjQ2MC45MjYzIj5VQ18xLjEuMzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI5NS4zOTU1IiB4PSIxMDI1LjQxNTkiIHk9IjQ3Ny4yMjMyIj4mIzEwNDI7JiMxMDgwOyYjMTA4MjsmIzEwODY7JiMxMDg4OyYjMTA4MDsmIzEwODk7JiMxMDkwOyYjMTA3MjsmIzEwOTA7JiMxMDgwOzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1NC41NzgxIiB4PSIxMDQ1LjgyNDYiIHk9IjQ5My41MjAxIj4mIzEwNzI7JiMxMDc0OyYjMTA5MDsmIzEwODY7JiMxMDg4OyYjMTExMDsmIzEwNzQ7PC90ZXh0PjwvZz48IS0tbGluayBVc2VyIHRvIFVDXzEtLT48ZyBjbGFzcz0ibGluayIgZGF0YS1lbnRpdHktMT0iVXNlciIgZGF0YS1lbnRpdHktMj0iVUNfMSIgZGF0YS1zb3VyY2UtbGluZT0iMzIiIGRhdGEtdWlkPSJsbmsxMyIgaWQ9ImxpbmtfVXNlcl9VQ18xIj48cGF0aCBkPSJNNjY4LjksMTY4LjA5NTYgQzY1Ny41MiwxNjguMDk1NiA2NTIuMTQsMTY4LjA5NTYgNjQwLjc2LDE2OC4wOTU2ICIgZmlsbD0ibm9uZSIgaWQ9IlVzZXItdG8tVUNfMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iNjM0Ljc2LDE2OC4wOTU2LDY0My43NiwxNzIuMDk1Niw2MzkuNzYsMTY4LjA5NTYsNjQzLjc2LDE2NC4wOTU2LDYzNC43NiwxNjguMDk1NiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjwvZz48IS0tcmV2ZXJzZSBsaW5rIFVDXzEgdG8gVUNfMS4xLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9IlVDXzEiIGRhdGEtZW50aXR5LTI9IlVDXzEuMSIgZGF0YS1zb3VyY2UtbGluZT0iMzMiIGRhdGEtdWlkPSJsbmsxNSIgaWQ9ImxpbmtfVUNfMV9VQ18xLjEiPjxwYXRoIGQ9Ik01NzguOTk5MiwyMDMuNzgwOCBDNjMzLjk0OTIsMjMyLjcxMDggNzA4LjM3LDI3MS44ODU2IDc1Ny42NCwyOTcuODI1NiAiIGZpbGw9Im5vbmUiIGlkPSJVQ18xLWJhY2t0by1VQ18xLjEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTtzdHJva2UtZGFzaGFycmF5OjcuMCw3LjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSI1NzMuNjksMjAwLjk4NTYsNTc5Ljc5MDMsMjA4LjcxNzgsNTc4LjExNDMsMjAzLjMxNDksNTgzLjUxNzIsMjAxLjYzODksNTczLjY5LDIwMC45ODU2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTIuMDUwOCIgeD0iNjc1LjExIiB5PSIyNTAuNzMyNSI+ZXh0ZW5kczwvdGV4dD48L2c+PCEtLXJldmVyc2UgbGluayBVQ18xIHRvIFVDXzEuMi0tPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJVQ18xIiBkYXRhLWVudGl0eS0yPSJVQ18xLjIiIGRhdGEtc291cmNlLWxpbmU9IjM0IiBkYXRhLXVpZD0ibG5rMTciIGlkPSJsaW5rX1VDXzFfVUNfMS4yIj48cGF0aCBkPSJNNDUwLjg0MTgsMjA0LjcwNDcgQzQwNi4yNjE4LDIzMC4yMDQ3IDM0OS43OCwyNjIuNTA1NiAzMDUsMjg4LjEyNTYgIiBmaWxsPSJub25lIiBpZD0iVUNfMS1iYWNrdG8tVUNfMS4yIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7c3Ryb2tlLWRhc2hhcnJheTo3LjAsNy4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iNDU2LjA1LDIwMS43MjU2LDQ0Ni4yNTE3LDIwMi43MjIyLDQ1MS43MDk5LDIwNC4yMDgyLDQ1MC4yMjM4LDIwOS42NjY0LDQ1Ni4wNSwyMDEuNzI1NiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjUyLjA1MDgiIHg9IjM4OC4xMSIgeT0iMjUwLjczMjUiPmV4dGVuZHM8L3RleHQ+PC9nPjwhLS1saW5rIFVDXzQgdG8gVUNfMS4yLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9IlVDXzQiIGRhdGEtZW50aXR5LTI9IlVDXzEuMiIgZGF0YS1zb3VyY2UtbGluZT0iMzUiIGRhdGEtdWlkPSJsbmsxOCIgaWQ9ImxpbmtfVUNfNF9VQ18xLjIiPjxwYXRoIGQ9Ik0yNjIuOTMsMTk0LjU1NTYgQzI1OS44NywyMTkuMDg1NiAyNTUuOTQ1LDI1MC41MTIxIDI1Mi40NjUsMjc4LjMyMjEgIiBmaWxsPSJub25lIiBpZD0iVUNfNC10by1VQ18xLjIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTtzdHJva2UtZGFzaGFycmF5OjcuMCw3LjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyNTEuNzIsMjg0LjI3NTYsMjU2LjgwNjUsMjc1Ljg0MTksMjUyLjM0MDgsMjc5LjMxNDMsMjQ4Ljg2ODUsMjc0Ljg0ODYsMjUxLjcyLDI4NC4yNzU2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTIuMDUwOCIgeD0iMjU5LjExIiB5PSIyNTAuNzMyNSI+ZXh0ZW5kczwvdGV4dD48L2c+PCEtLWxpbmsgVUNfMS4yIHRvIFVDXzEuMi0tPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJVQ18xLjIiIGRhdGEtZW50aXR5LTI9IlVDXzEuMiIgZGF0YS1zb3VyY2UtbGluZT0iMzYiIGRhdGEtdWlkPSJsbmsxOSIgaWQ9ImxpbmtfVUNfMS4yX1VDXzEuMiI+PHBhdGggZD0iTTM3MS44MywzMDguNTE1NiBDMzk3LjE4LDMxMC4wMDU2IDQxNS4zNCwzMTQuNTg1NiA0MTUuMzQsMzIyLjIzNTYgQzQxNS4zNCwzMjkuODg1NiA0MDMuMTY5NSwzMzQuMTAxMiAzNzcuODE5NSwzMzUuNjAxMiAiIGZpbGw9Im5vbmUiIGlkPSJVQ18xLjItdG8tVUNfMS4yIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7c3Ryb2tlLWRhc2hhcnJheTo3LjAsNy4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMzcxLjgzLDMzNS45NTU2LDM4MS4wNTA2LDMzOS40MTcsMzc2LjgyMTMsMzM1LjY2MDMsMzgwLjU3OCwzMzEuNDMxLDM3MS44MywzMzUuOTU1NiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjUyLjA1MDgiIHg9IjQyMS4zNCIgeT0iMzI2LjgwMjUiPmV4dGVuZHM8L3RleHQ+PC9nPjwhLS1yZXZlcnNlIGxpbmsgVUNfMS4yIHRvIFVDXzEuMi4xLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9IlVDXzEuMiIgZGF0YS1lbnRpdHktMj0iVUNfMS4yLjEiIGRhdGEtc291cmNlLWxpbmU9IjM3IiBkYXRhLXVpZD0ibG5rMjEiIGlkPSJsaW5rX1VDXzEuMl9VQ18xLjIuMSI+PHBhdGggZD0iTTIxMC4zNDAyLDM2My4yMzM2IEMxODQuODQwMiwzOTAuOTgzNiAxNTQuMTQsNDI0LjM3NTYgMTMxLjY3LDQ0OC44MzU2ICIgZmlsbD0ibm9uZSIgaWQ9IlVDXzEuMi1iYWNrdG8tVUNfMS4yLjEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTtzdHJva2UtZGFzaGFycmF5OjcuMCw3LjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyMTQuNCwzNTguODE1NiwyMDUuMzY1MSwzNjIuNzM2MSwyMTEuMDE2OSwzNjIuNDk3MywyMTEuMjU1NywzNjguMTQ5MSwyMTQuNCwzNTguODE1NiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjUyLjA1MDgiIHg9IjE4NC4xMSIgeT0iNDAyLjg3MjUiPmV4dGVuZHM8L3RleHQ+PC9nPjwhLS1yZXZlcnNlIGxpbmsgVUNfMS4yIHRvIFVDXzEuMi4yLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9IlVDXzEuMiIgZGF0YS1lbnRpdHktMj0iVUNfMS4yLjIiIGRhdGEtc291cmNlLWxpbmU9IjM4IiBkYXRhLXVpZD0ibG5rMjMiIGlkPSJsaW5rX1VDXzEuMl9VQ18xLjIuMiI+PHBhdGggZD0iTTI4Ni4xNDczLDM2My4xMDMxIEMzMDkuNDA3MywzODYuODYzMSAzMzUuNyw0MTMuNzE1NiAzNTkuMDEsNDM3LjUyNTYgIiBmaWxsPSJub25lIiBpZD0iVUNfMS4yLWJhY2t0by1VQ18xLjIuMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxO3N0cm9rZS1kYXNoYXJyYXk6Ny4wLDcuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjI4MS45NSwzNTguODE1NiwyODUuMzg3NiwzNjguMDQ1MSwyODUuNDQ3NywzNjIuMzg4NiwyOTEuMTA0MywzNjIuNDQ4NywyODEuOTUsMzU4LjgxNTYiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1Mi4wNTA4IiB4PSIzMjUuMTEiIHk9IjQwMi44NzI1Ij5leHRlbmRzPC90ZXh0PjwvZz48IS0tbGluayBVQ18xIHRvIFVDXzEuMi4yLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9IlVDXzEiIGRhdGEtZW50aXR5LTI9IlVDXzEuMi4yIiBkYXRhLXNvdXJjZS1saW5lPSIzOSIgZGF0YS11aWQ9ImxuazI0IiBpZD0ibGlua19VQ18xX1VDXzEuMi4yIj48cGF0aCBkPSJNNTExLjg3LDIwNi4wNTU2IEM1MDkuMzksMjQ1LjU5NTYgNTAxLjk5LDMwOS40MTU2IDQ4MC4xMSwzNTkuODA1NiBDNDY3LjY5LDM4OC4zODU2IDQ1MC41OTE0LDQxMS44MDQ0IDQzMi40MzE0LDQzMi44MzQ0ICIgZmlsbD0ibm9uZSIgaWQ9IlVDXzEtdG8tVUNfMS4yLjIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTtzdHJva2UtZGFzaGFycmF5OjcuMCw3LjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSI0MjguNTEsNDM3LjM3NTYsNDM3LjQxOTYsNDMzLjE3ODEsNDMxLjc3NzksNDMzLjU5MTMsNDMxLjM2NDcsNDI3Ljk0OTYsNDI4LjUxLDQzNy4zNzU2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTIuMDUwOCIgeD0iNTAyLjExIiB5PSIzMjYuODAyNSI+ZXh0ZW5kczwvdGV4dD48L2c+PCEtLXJldmVyc2UgbGluayBVQ18xLjEgdG8gVUNfMS4xLjEtLT48ZyBjbGFzcz0ibGluayIgZGF0YS1lbnRpdHktMT0iVUNfMS4xIiBkYXRhLWVudGl0eS0yPSJVQ18xLjEuMSIgZGF0YS1zb3VyY2UtbGluZT0iNDIiIGRhdGEtdWlkPSJsbmsyNiIgaWQ9ImxpbmtfVUNfMS4xX1VDXzEuMS4xIj48cGF0aCBkPSJNNzY2LjcxMzksMzYxLjE4OTkgQzc0My40OTM5LDM4Ni4wODk5IDcxOS44MSw0MTEuNDk1NiA2OTMuOTEsNDM5LjI3NTYgIiBmaWxsPSJub25lIiBpZD0iVUNfMS4xLWJhY2t0by1VQ18xLjEuMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwb2x5Z29uIGZpbGw9Im5vbmUiIHBvaW50cz0iNzc4Ljk5LDM0OC4wMjU2LDc2Mi4zMjU4LDM1Ny4wOTc5LDc3MS4xMDIsMzY1LjI4MTksNzc4Ljk5LDM0OC4wMjU2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PC9nPjwhLS1yZXZlcnNlIGxpbmsgVUNfMS4xIHRvIFVDXzEuMS4yLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9IlVDXzEuMSIgZGF0YS1lbnRpdHktMj0iVUNfMS4xLjIiIGRhdGEtc291cmNlLWxpbmU9IjQzIiBkYXRhLXVpZD0ibG5rMjgiIGlkPSJsaW5rX1VDXzEuMV9VQ18xLjEuMiI+PHBhdGggZD0iTTgyMC4zOTkzLDM2NC44NDU3IEM4MzEuMDY5MywzODkuMTM1NyA4NDAuMTMsNDA5LjcxNTYgODUyLjIsNDM3LjE4NTYgIiBmaWxsPSJub25lIiBpZD0iVUNfMS4xLWJhY2t0by1VQ18xLjEuMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwb2x5Z29uIGZpbGw9Im5vbmUiIHBvaW50cz0iODEzLjE2LDM0OC4zNjU2LDgxNC45MDU5LDM2Ny4yNTg4LDgyNS44OTI2LDM2Mi40MzI2LDgxMy4xNiwzNDguMzY1NiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjwvZz48IS0tcmV2ZXJzZSBsaW5rIFVDXzEuMSB0byBVQ18xLjEuMy0tPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJVQ18xLjEiIGRhdGEtZW50aXR5LTI9IlVDXzEuMS4zIiBkYXRhLXNvdXJjZS1saW5lPSI0NCIgZGF0YS11aWQ9ImxuazMwIiBpZD0ibGlua19VQ18xLjFfVUNfMS4xLjMiPjxwYXRoIGQ9Ik04NjAuNDk0NiwzNTUuNTc5NSBDOTA4LjE5NDYsMzgyLjAwOTUgOTY5LjczLDQxNi4wOTU2IDEwMjAuOTgsNDQ0LjQ5NTYgIiBmaWxsPSJub25lIiBpZD0iVUNfMS4xLWJhY2t0by1VQ18xLjEuMyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxwb2x5Z29uIGZpbGw9Im5vbmUiIHBvaW50cz0iODQ0Ljc1LDM0Ni44NTU2LDg1Ny41ODY3LDM2MC44Mjc3LDg2My40MDI2LDM1MC4zMzEzLDg0NC43NSwzNDYuODU1NiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjwvZz48dGV4dCBmaWxsPSIjODg4ODg4IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMjUuODgzOCIgeD0iOTI0LjQ2MzQiIHk9IjUyNi4yMjk2Ij4mIzEwNDA7JiMxMDg1OyYjMTA3MjsmIzEwODM7JiMxMTEwOyYjMTA5MDsmIzEwODA7JiMxMDk1OyYjMTA4NTsmIzEwODA7JiMxMDgxOyAmIzEwODc7JiMxMDg2OyYjMTA4ODsmIzEwOTA7JiMxMDcyOyYjMTA4MzsuICYjMTA1MjsmIzEwODY7JiMxMDc2OyYjMTA3NzsmIzEwODM7JiMxMTAwOyAmIzEwODc7JiMxMDg4OyYjMTA3NzsmIzEwOTQ7JiMxMDc3OyYjMTA3NjsmIzEwNzc7JiMxMDg1OyYjMTA5MDsmIzExMTA7JiMxMDc0Oy48L3RleHQ+PHRleHQgZmlsbD0iIzg4ODg4OCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTMyLjU1ODYiIHg9Ijk3MS4xMjYiIHk9IjUzNy44NzAzIj4mIzEwNTM7JiMxMDU4OyYjMTA1OTsmIzEwNTk7ICYjMTA1MDsmIzEwNTU7JiMxMDMwOyAmIzExMTA7JiMxMDg0Oy4mIzEwMzA7LiYjMTA1NzsmIzExMTA7JiMxMDgyOyYjMTA4NjsmIzEwODg7JiMxMDg5OyYjMTEwMDsmIzEwODI7JiMxMDg2OyYjMTA3NTsmIzEwODY7PC90ZXh0Pjx0ZXh0IGZpbGw9IiM4ODg4ODgiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjUxLjMyODEiIHg9IjEwMTEuNzQxMyIgeT0iNTQ5LjUxMDkiPiYjMTA1MDsmIzEwODA7JiMxMTEwOyYjMTA3NDstMjAyMDwvdGV4dD48IS0tU1JDPVtaTE5CUmpmMDVEdHRBd3g4NlpTc2c4ZVltWVJ6VzZ4T0xLODZkMEdMdVNlc0tqTTcxMjRZTktIRExLTEtZYkFiUk51MEdMNGZoX3gyZEpfZ2NWNEpRakR3Q1JCZHRaZGR0Q1RTRXl0SkN1X0VCQkRYRU95ZVU0ZWRUamlaal9kUUVaQUFMQlRSamRES1F2ZHI1LUxkTUNuSnd2MUFqTkJiLTZjcmVFc2hLclF4NE9BZVJ3X2ZqUW1xRkZyVzB3em9OM3RHWUJfb2I3X21ZMlVZcHNDVVlORVU0U3p2cElqbjhPUG9NdEluRkgxM3lPN3VEd3o1NXB1Wk5lWC1BaWNKM0hBLTBPTzQxbU9sVUdHNGw0eDVHQjVFR044RVh0NEtZMl9VM3lJaVV4UDNFUndMZDNtSkZWWnc2WXpwUEJmS1NJczd6WW15ZmdhRWdFTWJkb1FJQVRCVkgxOHhoYkt0Tk9qb0FkakxsVkl1TGR4VXZkamVXSHdVODl2aGdFY2gtNEtGV084R01QV0psN3hvNkU0aGZKdXAwNlpGRDJGY1RwN19EZjRNS2RzNlM4STBPN2c5TEFpYUJ5R0xxQmlIamdRZEduYXhMSUVfS3JLUU1Td0w2MlFMenNEaThxa2U0S2N6MlZqV0JVbEVBdndCRmdMWVFOZXNzY3dyNGJUU2dEOGtlX3cyai1vRkRJNjJpU2ZMTG9Peld6bDhnM2ZiYmhxT0lGaDRDX0p1R2dyMWcwNTNZNV95X19nNlFRQzBEa2hNMDVlNlhTdHRnQmd5THcwWHhDanlwMThMcHl2YUxGVGkwZ0pmNmNNTnhIZnA5UEViMXliQTBJX3lLX3I2QlBBT1hLM29yZzhrUGh3aWxGbUR2S3ZRSF9DdHdUMXd2VTZ3a3g3THM2NGphak84UkYxQkZSbEJjY0pFeTMxc1V2ME02UlZEWVFaM0NrT3gtUlZidjNxRUF2MWZBVm5qS09rWl9YMGRqa3FiX1gzeTRIVElwai1YaDgtdW5EVUNWc3NDUGVwckVwSTM3QjBPQkhhcEx1aUhsXzF0VmswN21nWXp2dTZ5Y2FrRDFuZl9tdmxnMkZKM2JNaFUyUV9aT3hVVzFyM1VzM1ZZTnY2bHpXeTBdLS0+PC9nPjwvc3ZnPg==" alt="" /></p>
+<p><strong>Діаграма прецедентів</strong></p>
+</center>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Проєктування-бази-даних"><a class="header" href="#Проєктування-бази-даних">Проєктування бази даних</a></h1>
+<p>В рамках проекту розробляється:</p>
+<ul>
+<li>модель бізнес-об'єктів</li>
+<li>ER-модель</li>
+<li>реляційна схема
+na verande</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Реалізація-інформаційного-та-програмного-забезпечення"><a class="header" href="#Реалізація-інформаційного-та-програмного-забезпечення">Реалізація інформаційного та програмного забезпечення</a></h1>
+<p>В рамках проекту розробляється:</p>
+<ul>
+<li>SQL-скрипт для створення на початкового наповнення бази даних</li>
+<li>RESTfull сервіс для управління даними</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Тестування-працездатності-системи"><a class="header" href="#Тестування-працездатності-системи">Тестування працездатності системи</a></h1>
+<p><em>В цьому розділі необхідно вказати засоби тестування, навести вихідні коди тестів та результати тестування.</em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Висновки-1"><a class="header" href="#Висновки-1">Висновки</a></h1>
+<p>У висновках наводять оцінку отриманих результатів, можливі галузі його використання. Висновки повинні містити в собі коротку узагальнену оцінку результатів розробки, у
+тому числі і з погляду на їх технічно-економічну ефективність. Необхідно порівняти
+отримані результати усіх характеристик об’єкта проєктування із завданням і з основними показниками сучасних аналогічних об’єктів.</p>
+<p>Необхідно вказати яке нове технічне рішення покладене в основу проєкту і у чому її
+переваги, що нового було запропоновано самим студентом.</p>
+<p>На базі отриманих висновків можуть надаватися рекомендації по використанню розробки. Вони повинні
+мати конкретний характер і бути цілком підтверджені проєктом.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
